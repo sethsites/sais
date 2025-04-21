@@ -1,16 +1,20 @@
 defmodule Sais.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/sethsites/sais"
+  @version "0.1.0"
+
   def project do
     [
       app: :sais,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       consolidate_protocols: Mix.env() != :dev,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -24,6 +28,17 @@ defmodule Sais.MixProject do
     ]
   end
 
+  defp docs do
+    [
+      main: "readme",
+      source_url: @source_url,
+      source_ref: "v#{@version}",
+      extras: [
+        "README.md"
+      ]
+    ]
+  end
+
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
@@ -33,6 +48,7 @@ defmodule Sais.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:git_ops, "~> 2.0", only: [:dev], runtime: false},
       {:bcrypt_elixir, "~> 3.0"},
       {:picosat_elixir, "~> 0.2"},
       {:absinthe_phoenix, "~> 2.0"},
